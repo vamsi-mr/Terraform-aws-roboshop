@@ -21,7 +21,7 @@ resource "aws_instance" "main" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [local.sg_id]
   subnet_id              = local.private_subnet_id
-  iam_instance_profile = "TerraformAdmin"
+  iam_instance_profile   = "EC2RoleToFetchSSMParameter"  ## required for Shipping and Payment component
 
   tags = merge(
     local.common_tags,
