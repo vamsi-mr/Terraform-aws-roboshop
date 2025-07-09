@@ -21,6 +21,7 @@ resource "aws_instance" "main" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [local.sg_id]
   subnet_id              = local.private_subnet_id
+  iam_instance_profile = "TerrafromAdmin"
 
   tags = merge(
     local.common_tags,
@@ -190,12 +191,13 @@ resource "aws_autoscaling_policy" "main" {
   }
 }
 
+
 resource "aws_lb_listener_rule" "main" {
-  listener_arn = local.alb_listener_arn
-  priority = var.rule_priority
+listener_arn = local.alb_listener_arn
+priority     = var.rule_priority
 
   action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.main.arn
   }
 
